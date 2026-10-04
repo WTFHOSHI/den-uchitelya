@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Урок для Елены Феликсовны</title>
+<meta name="description" content="Интерактивный урок ко Дню учителя от группы ИС-25-3С">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Neucha&family=Golos+Text:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-group">ИС-25-3С · 5 октября</span>
+    <span class="brand-title">Урок для Елены Феликсовны</span>
+  </div>
+  <ol class="plan" id="plan" aria-label="План урока">
+    <li data-step="bell">Звонок</li>
+    <li data-step="topic">Число и тема</li>
+    <li data-step="quiz">Ответ у доски</li>
+    <li data-step="journal">Журнал</li>
+    <li data-step="planes">Самолётики</li>
+    <li data-step="end">Звонок с урока</li>
+  </ol>
+</header>
+
+<main class="room-wrap">
+  <svg id="room" viewBox="0 0 1760 930" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Кабинет, вид сверху">
+    <defs>
+      <pattern id="parquet" width="80" height="40" patternUnits="userSpaceOnUse">
+        <rect width="80" height="40" fill="#d8b98a"/>
+        <rect x="0" y="0" width="40" height="20" fill="#d3b281"/>
+        <rect x="40" y="20" width="40" height="20" fill="#d3b281"/>
+        <path d="M0 20H80M40 0V20M0 20V40M80 20V40" stroke="#c39f6c" stroke-width="1.2"/>
+      </pattern>
+      <pattern id="tiles" width="34" height="34" patternUnits="userSpaceOnUse">
+        <rect width="34" height="34" fill="#b9bfc4"/>
+        <path d="M0 0H34V34" fill="none" stroke="#a3aab0" stroke-width="2"/>
+      </pattern>
+      <pattern id="woodtop" width="120" height="14" patternUnits="userSpaceOnUse">
+        <rect width="120" height="14" fill="#b9814f"/>
+        <path d="M0 7Q30 3 60 7T120 7" fill="none" stroke="#a87043" stroke-width="1.4"/>
+      </pattern>
+      <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+        <feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#3b2a17" flood-opacity=".28"/>
+      </filter>
+      <radialGradient id="glow" r="0.6">
+        <stop offset="0" stop-color="#fff6c2" stop-opacity=".9"/>
+        <stop offset="1" stop-color="#fff6c2" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+
+    <!-- балкон -->
+    <g id="balcony">
+      <path d="M30 120 L170 120 L170 910 L95 910 Q40 860 30 760 Z" fill="url(#tiles)"/>
+      <path d="M30 120 L30 760 Q40 860 95 910" fill="none" stroke="#7d868d" stroke-width="10" stroke-linecap="round"/>
+      <g fill="#6f9c4a"><circle cx="70" cy="200" r="22"/><circle cx="62" cy="470" r="18"/><circle cx="74" cy="640" r="20"/></g>
+      <g fill="#8a5a33"><circle cx="70" cy="200" r="8"/><circle cx="62" cy="470" r="7"/><circle cx="74" cy="640" r="7"/></g>
+      <text x="100" y="330" class="floor-label" transform="rotate(-90 100 330)">балкон</text>
+    </g>
+
+    <!-- пол и стены -->
+    <rect x="200" y="30" width="1530" height="890" fill="url(#parquet)"/>
+    <path d="M200 30H1730V920H200Z" fill="none" stroke="#4a4f5a" stroke-width="22"/>
+
+    <!-- окна на левой стене -->
+    <g id="windows" class="hot" data-hot="window" tabindex="0" role="button" aria-label="Окно">
+      <rect x="178" y="80" width="44" height="560" fill="transparent"/>
+      <g class="window-panes">
+        <rect x="190" y="90" width="20" height="160" rx="3" fill="#bfe1f2" stroke="#f2f6f8" stroke-width="4"/>
+        <rect x="190" y="270" width="20" height="160" rx="3" fill="#bfe1f2" stroke="#f2f6f8" stroke-width="4"/>
+        <rect x="190" y="450" width="20" height="160" rx="3" fill="#bfe1f2" stroke="#f2f6f8" stroke-width="4"/>
+      </g>
+    </g>
+
+    <!-- дверь на балкон -->
+    <g id="balconyDoor" class="hot" data-hot="balcony" tabindex="0" role="button" aria-label="Дверь на балкон">
+      <rect x="186" y="690" width="28" height="140" fill="#e9eef1" stroke="#9aa4ab" stroke-width="3"/>
+      <path d="M214 690 A140 140 0 0 1 340 760" fill="none" stroke="#9aa4ab" stroke-width="2" stroke-dasharray="6 6"/>
+      <circle cx="207" cy="765" r="4" fill="#6c757c"/>
+    </g>
+
+    <!-- часы на стене -->
+    <g id="clock" class="hot" data-hot="clock" tabindex="0" role="button" aria-label="Часы">
+      <circle cx="1100" cy="32" r="26" fill="#fbfaf5" stroke="#2f3440" stroke-width="5"/>
+      <g id="clockHands">
+        <line id="hourHand" x1="1100" y1="32" x2="1100" y2="18" stroke="#2f3440" stroke-width="4" stroke-linecap="round"/>
+        <line id="minHand" x1="1100" y1="32" x2="1114" y2="32" stroke="#2f3440" stroke-width="3" stroke-linecap="round"/>
+      </g>
+      <circle cx="1100" cy="32" r="3" fill="#c8372d"/>
+    </g>
+
+    <!-- доска -->
+    <g id="boardObj" class="hot" data-hot="board" tabindex="0" role="button" aria-label="Доска">
+      <ellipse id="boardGlow" cx="865" cy="110" rx="230" ry="110" fill="url(#glow)" opacity="0"/>
+      <rect x="690" y="40" width="350" height="130" rx="6" fill="#7a5a3a"/>
+      <rect x="700" y="48" width="330" height="112" rx="3" fill="#2e4a3d"/>
+      <g id="boardMini" fill="#e8ece4" font-family="Neucha, cursive" text-anchor="middle" opacity=".0">
+        <text x="865" y="82" font-size="18">5 октября · Классная работа</text>
+        <text x="865" y="116" font-size="24">Тема: «День учителя»</text>
+      </g>
+      <rect x="700" y="160" width="330" height="12" fill="#9b7650"/>
+      <rect x="760" y="161" width="34" height="8" rx="3" fill="#f4f1e8"/>
+      <rect x="930" y="160" width="46" height="10" rx="2" fill="#5f6d74"/>
+    </g>
+
+    <!-- стол преподавателя (угловой) -->
+    <g id="teacherDesk" filter="url(#soft)">
+      <path d="M635 180 H705 V275 H1000 V380 H635 Z" fill="url(#woodtop)" stroke="#8c5a31" stroke-width="4" stroke-linejoin="round"/>
+    </g>
+    <g id="teacherChair">
+      <rect x="845" y="205" width="52" height="46" rx="12" fill="#3f4a57"/>
+      <rect x="845" y="198" width="52" height="12" rx="6" fill="#2f3842"/>
+    </g>
+    <g id="deskItems">
+      <!-- кружка и ручка -->
+      <circle cx="668" cy="215" r="13" fill="#f4f1e8" stroke="#c8372d" stroke-width="4"/>
+      <circle cx="668" cy="215" r="7" fill="#6b4126"/>
+      <rect x="960" y="296" width="6" height="52" rx="3" fill="#2453c9" transform="rotate(25 963 322)"/>
+      <!-- журнал -->
+      <g id="journalObj" class="hot" data-hot="journal" tabindex="0" role="button" aria-label="Классный журнал">
+        <rect x="690" y="292" width="96" height="70" rx="4" fill="#3a6b4f" stroke="#244634" stroke-width="3"/>
+        <rect x="690" y="292" width="12" height="70" fill="#244634"/>
+        <text x="748" y="333" text-anchor="middle" font-family="Neucha, cursive" font-size="16" fill="#e9e3c9">ЖУРНАЛ</text>
+      </g>
+      <!-- указка (появится после квеста) -->
+      <g id="pointerObj" class="hot" data-hot="pointer" tabindex="0" role="button" aria-label="Указка" style="display:none">
+        <ellipse cx="880" cy="327" rx="110" ry="26" fill="url(#glow)"/>
+        <line x1="805" y1="345" x2="975" y2="305" stroke="#c99a5b" stroke-width="9" stroke-linecap="round"/>
+        <line x1="955" y1="310" x2="975" y2="305" stroke="#c8372d" stroke-width="9" stroke-linecap="round"/>
+      </g>
+      <!-- куда приземляются самолётики -->
+      <g id="landed"></g>
+    </g>
+
+    <!-- дверь -->
+    <g id="door" class="hot" data-hot="door" tabindex="0" role="button" aria-label="Дверь">
+      <ellipse id="doorGlow" cx="1210" cy="80" rx="110" ry="80" fill="url(#glow)" opacity="0"/>
+      <rect x="1160" y="22" width="100" height="18" fill="#e9eef1"/>
+      <rect x="1160" y="30" width="12" height="100" fill="#a0693c" stroke="#7a4d28" stroke-width="2"/>
+      <path d="M1172 130 A100 100 0 0 0 1260 40" fill="none" stroke="#7a4d28" stroke-width="2" stroke-dasharray="6 6"/>
+      <circle cx="1166" cy="110" r="4" fill="#d9c27a"/>
+    </g>
+
+    <!-- мусорка -->
+    <g id="trash" class="hot" data-hot="trash" tabindex="0" role="button" aria-label="Мусорка">
+      <circle cx="1292" cy="230" r="22" fill="#9aa3a9" stroke="#6c757c" stroke-width="4"/>
+      <circle cx="1292" cy="230" r="13" fill="#7f888e"/>
+      <circle cx="1288" cy="226" r="6" fill="#f2f0e6"/>
+    </g>
+
+    <!-- шкаф -->
+    <g id="cabinet" class="hot" data-hot="cabinet" tabindex="0" role="button" aria-label="Шкаф">
+      <rect x="1330" y="42" width="380" height="150" fill="#a0693c" stroke="#7a4d28" stroke-width="4" filter="url(#soft)"/>
+      <path d="M1425 42V192M1520 42V192M1615 42V192" stroke="#7a4d28" stroke-width="3"/>
+      <g fill="#e2c88f"><circle cx="1415" cy="170" r="4"/><circle cx="1435" cy="170" r="4"/><circle cx="1605" cy="170" r="4"/><circle cx="1625" cy="170" r="4"/></g>
+      <g id="cabinetPapers" opacity="0">
+        <rect x="1440" y="200" width="70" height="50" fill="#fdfcf7" stroke="#c9d4e0" transform="rotate(-8 1475 225)"/>
+        <rect x="1470" y="215" width="70" height="50" fill="#fdfcf7" stroke="#c9d4e0" transform="rotate(10 1505 240)"/>
+        <rect x="1420" y="225" width="70" height="50" fill="#fdfcf7" stroke="#c9d4e0" transform="rotate(4 1455 250)"/>
+      </g>
+    </g>
+
+    <!-- парты и ученики рисуются скриптом -->
+    <g id="desks"></g>
+    <g id="seats"></g>
+
+    <!-- летящий самолётик -->
+    <g id="flight" style="display:none">
+      <ellipse id="flightShadow" cx="0" cy="0" rx="22" ry="8" fill="#3b2a17" opacity=".2"/>
+      <g id="flightPlane">
+        <path d="M-26 6 L30 -2 L-14 -14 L-6 -2 Z" fill="#fdfcf7" stroke="#9fb2c9" stroke-width="1.5"/>
+        <path d="M-6 -2 L30 -2 L-10 12 Z" fill="#e1e8f1" stroke="#9fb2c9" stroke-width="1.5"/>
+      </g>
+    </g>
+  </svg>
+
+  <div class="hint" id="hint" aria-live="polite"></div>
+  <div class="tooltip" id="tooltip" hidden></div>
+</main>
+
+<!-- старт -->
+<section class="overlay intro" id="intro">
+  <div class="intro-card">
+    <p class="intro-kicker">5 октября · ИС-25-3С</p>
+    <h1>Елена Феликсовна,<br>сегодня урок ведём мы</h1>
+    <p class="intro-text">Включите звук. Урок идёт по плану: сначала доска, потом журнал, потом самолётики.</p>
+    <button class="btn btn-big" id="startBtn" type="button">Войти в класс</button>
+  </div>
+</section>
+
+<!-- доска крупно -->
+<section class="overlay board-view" id="boardView" hidden>
+  <div class="board-frame">
+    <div class="board" id="board">
+      <canvas id="chalk"></canvas>
+      <div class="board-ui" id="boardUi"></div>
+    </div>
+    <div class="tray">
+      <span class="chalk-piece"></span>
+      <span class="tray-note" id="trayNote"></span>
+      <span class="sponge"></span>
+    </div>
+  </div>
+  <button class="btn btn-ghost board-close" id="boardClose" type="button">Вернуться в класс</button>
+</section>
+
+<!-- журнал -->
+<section class="overlay" id="journalView" hidden>
+  <div class="journal">
+    <div class="journal-page journal-left">
+      <p class="j-kicker">Классный журнал · ИС-25-3С</p>
+      <h2>Оценки куратору</h2>
+      <p class="j-sub">Ставит группа. Других оценок, кроме пятёрки, в этом журнале не бывает.</p>
+      <p class="j-progress" id="jProgress"></p>
+    </div>
+    <div class="journal-page journal-right">
+      <table class="j-table">
+        <thead><tr><th>Предмет оценки</th><th>Оценка</th></tr></thead>
+        <tbody id="jBody"></tbody>
+      </table>
+      <button class="btn" id="journalClose" type="button">Закрыть журнал</button>
+    </div>
+  </div>
+</section>
+
+<!-- письмо из самолётика -->
+<section class="overlay" id="letterView" hidden>
+  <article class="letter" id="letter">
+    <p class="letter-from" id="letterFrom"></p>
+    <p class="letter-text" id="letterText"></p>
+    <p class="letter-sign">ИС-25-3С</p>
+    <button class="btn" id="letterClose" type="button">Сложить и вызвать следующего</button>
+  </article>
+</section>
+
+<!-- финал -->
+<section class="overlay final" id="finalView" hidden>
+  <canvas id="confetti"></canvas>
+  <div class="final-board">
+    <p class="final-kicker">Урок окончен</p>
+    <h2>С Днём учителя,<br>Елена Феликсовна!</h2>
+    <p class="final-text">Спасибо за терпение, за объяснения по десять раз и за то, что вы с нами. Оценка за урок: <span class="five">5</span></p>
+    <p class="final-sign">Ваша группа ИС-25-3С</p>
+    <button class="btn btn-ghost" id="restartBtn" type="button">Вернуться в класс</button>
+  </div>
+</section>
+
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script src="js/data.js"></script>
+<script src="js/questions.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
