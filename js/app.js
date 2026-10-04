@@ -83,7 +83,8 @@
     return ac;
   }
 
-  function bell(seconds) {
+  function bell() { /* звонок отключён */ }
+  function bellOld(seconds) {
     var a = audio(); if (!a) return;
     var t = a.currentTime, dur = seconds || 2.6;
     var master = a.createGain();
@@ -115,8 +116,8 @@
     g.gain.exponentialRampToValueAtTime(0.0005, t + dur);
     o.connect(g).connect(a.destination); o.start(t); o.stop(t + dur + 0.05);
   }
-  function ding() { tone(880, 0.25, "sine", 0.12); setTimeout(function () { tone(1320, 0.4, "sine", 0.1); }, 110); }
-  function buzz() { tone(170, 0.28, "sawtooth", 0.05, 120); }
+  function ding() {}
+  function buzz() {}
 
   function noiseBurst(dur, from, to, vol, type) {
     var a = audio(); if (!a) return;
