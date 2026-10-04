@@ -137,13 +137,13 @@
   function chalkSoundStart() {
     var a = audio(); if (!a || chalkGain) return;
     var s = a.createBufferSource(); s.buffer = noiseBuf; s.loop = true;
-    var f = a.createBiquadFilter(); f.type = "bandpass"; f.frequency.value = 3200; f.Q.value = 0.9;
+    var f = a.createBiquadFilter(); f.type = "bandpass"; f.frequency.value = 1400; f.Q.value = 0.7;
     chalkGain = a.createGain(); chalkGain.gain.value = 0;
     s.connect(f).connect(chalkGain).connect(a.destination); s.start();
   }
   function chalkSound(speed) {
     if (!chalkGain) return;
-    var v = Math.min(0.09, speed * 0.004);
+    var v = Math.min(0.035, speed * 0.0015);
     chalkGain.gain.setTargetAtTime(v, ac.currentTime, 0.03);
   }
 
@@ -189,6 +189,7 @@
         [0, 1].forEach(function (k) {
           var cy = y + (k === 0 ? 14 : 70);
           var name = pair[k];
+          drawPc(desks, b, cy + CHAIR / 2);
           var g = el("g", { class: "seat" + (name ? " has-student" : "") }, seats);
           var cx = b.chairX + CHAIR / 2, ccy = cy + CHAIR / 2;
           el("circle", { class: "ring", cx: cx, cy: ccy, r: 30, fill: "none", stroke: "#ffe46b", "stroke-width": 5 }, g);
@@ -206,8 +207,8 @@
             fill: HAIR[(h >> 3) % HAIR.length]
           }, st);
           // самолётик на парте
-          var px = b.side === "right" ? b.deskX + DESK_W - 26 : b.deskX + 26;
-          var plane = el("g", { class: "desk-plane", transform: "translate(" + px + " " + ccy + ") rotate(" + (b.side === "right" ? 200 : -20) + ") scale(.55)" }, g);
+          var px = b.side === "right" ? b.deskX + DESK_W - 20 : b.deskX + 20;
+          var plane = el("g", { class: "desk-plane", transform: "translate(" + px + " " + (ccy - 14) + ") rotate(" + (b.side === "right" ? 250 : -70) + ") scale(.5)" }, g);
           el("path", { d: "M-26 6 L30 -2 L-14 -14 L-6 -2 Z", fill: "#fdfcf7", stroke: "#9fb2c9", "stroke-width": 2 }, plane);
           el("path", { d: "M-6 -2 L30 -2 L-10 12 Z", fill: "#e1e8f1", stroke: "#9fb2c9", "stroke-width": 2 }, plane);
           var check = el("text", { x: px, y: ccy + 7, "text-anchor": "middle", "font-family": "Neucha, cursive", "font-size": 22, fill: "#2f6b2a", style: "display:none" }, g);
@@ -220,6 +221,22 @@
         });
       });
     });
+  }
+
+  // рабочее место на парте: монитор у дальнего края, клавиатура посередине, мышка рядом
+  function drawPc(parent, b, cy) {
+    var right = b.side === "right"; // ученик сидит справа от парты
+    var g = el("g", { class: "pc" }, parent);
+    var monX = right ? b.deskX + 8 : b.deskX + DESK_W - 16;
+    var standX = right ? b.deskX + 3 : b.deskX + DESK_W - 9;
+    el("rect", { x: standX, y: cy - 7, width: 6, height: 14, rx: 2, fill: "#3a3f47" }, g);
+    el("rect", { x: monX, y: cy - 22, width: 8, height: 44, rx: 2, fill: "#1d2127" }, g);
+    el("rect", { x: right ? monX + 6 : monX, y: cy - 21, width: 2.5, height: 42, fill: "#7fb3e6", opacity: .85 }, g);
+    var kbX = right ? b.deskX + 30 : b.deskX + DESK_W - 46;
+    el("rect", { x: kbX, y: cy - 19, width: 16, height: 38, rx: 3, fill: "#2b3038" }, g);
+    el("path", { d: "M" + (kbX + 5) + " " + (cy - 15) + "V" + (cy + 15) + "M" + (kbX + 11) + " " + (cy - 15) + "V" + (cy + 15), stroke: "#4a515c", "stroke-width": 1.6 }, g);
+    var mx = right ? b.deskX + 56 : b.deskX + DESK_W - 56;
+    el("ellipse", { cx: mx, cy: cy + 12, rx: 6, ry: 8, fill: "#2b3038" }, g);
   }
 
   function showTip(e, text) {
@@ -266,7 +283,7 @@
     ctx.textAlign = "center";
     ctx.setLineDash([3, 7]);
     ctx.lineWidth = 1.7;
-    ctx.strokeStyle = "rgba(238,240,232,.5)";
+    ctx.strokeStyle = "rgba(40,60,90,.45)";
     LINES.forEach(function (l) { ctx.font = font(l.size); ctx.strokeText(l.text, W / 2, l.y); });
     ctx.restore();
   }
@@ -275,31 +292,17 @@
     ctx.clearRect(0, 0, W, H);
     ctx.save();
     ctx.textAlign = "center";
-    ctx.fillStyle = "rgba(240,241,233,.95)";
-    ctx.shadowColor = "rgba(255,255,255,.35)"; ctx.shadowBlur = 3;
+    ctx.fillStyle = MARKER;
     LINES.forEach(function (l) { ctx.font = font(l.size); ctx.fillText(l.text, W / 2, l.y); });
-    ctx.restore();
-    ctx.save();
-    ctx.globalCompositeOperation = "destination-out";
-    for (var i = 0; i < 9000; i++) {
-      ctx.fillStyle = "rgba(0,0,0," + (Math.random() * 0.7) + ")";
-      ctx.fillRect(Math.random() * W, Math.random() * 270, Math.random() * 2 + 0.5, Math.random() * 1.5 + 0.5);
-    }
     ctx.restore();
   }
 
+  var MARKER = "#1f4fbf";
   function chalkSegment(x0, y0, x1, y1) {
     ctx.save();
     ctx.lineCap = "round"; ctx.lineJoin = "round";
-    ctx.strokeStyle = "rgba(242,242,234,.82)"; ctx.lineWidth = 6;
+    ctx.strokeStyle = MARKER; ctx.lineWidth = 6;
     ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1); ctx.stroke();
-    ctx.lineWidth = 1.6; ctx.strokeStyle = "rgba(255,255,255,.45)";
-    for (var i = 0; i < 3; i++) {
-      var j = function () { return (Math.random() - 0.5) * 6; };
-      ctx.beginPath(); ctx.moveTo(x0 + j(), y0 + j()); ctx.lineTo(x1 + j(), y1 + j()); ctx.stroke();
-    }
-    ctx.fillStyle = "rgba(240,240,232,.5)";
-    for (var k = 0; k < 4; k++) ctx.fillRect(x1 + (Math.random() - 0.5) * 18, y1 + (Math.random() - 0.5) * 18, 1.2, 1.2);
     ctx.restore();
     // покрытие
     var len = Math.hypot(x1 - x0, y1 - y0), n = Math.max(1, Math.ceil(len / 3));
@@ -354,11 +357,11 @@
 
   function startTracing() {
     $("board").classList.add("tracing");
-    $("trayNote").textContent = "Мел в руке. Обводите буквы мышкой";
+    $("trayNote").textContent = "Маркер в руке. Обводите буквы мышкой";
     var ui = $("boardUi");
     ui.innerHTML =
       '<div class="center-msg">' +
-      '<p>Обведите мелом число и тему урока, как в прописях</p>' +
+      '<p>Обведите маркером число и тему урока, как в прописях</p>' +
       '<div class="progress" style="width:min(420px,70%)"><span></span></div>' +
       '<p id="traceLabel">Обведено 0%</p></div>';
     var go = function () { buildMask(); drawGuide(); tracingReady = true; };
@@ -553,7 +556,7 @@
     var flight = $("flight"), planeG = $("flightPlane"), shadow = $("flightShadow");
     flight.style.display = "";
     var x0 = s.x, y0 = s.y;
-    var x1 = 900 + Math.random() * 80, y1 = 300 + Math.random() * 60;
+    var x1 = 958 + Math.random() * 22, y1 = 300 + Math.random() * 55;
     var cx = (x0 + x1) / 2 + (Math.random() - 0.5) * 120, cy = Math.min(y0, y1) - 230;
     var t0 = performance.now(), dur = 1500;
     whoosh();
@@ -697,7 +700,7 @@
         p.y += p.vy; p.x += p.vx + Math.sin(p.y / 40) * 0.4; p.r += p.vr;
         if (p.y > innerHeight + 30) parts[i] = newPart(false);
         x.save(); x.translate(p.x, p.y); x.rotate(p.r);
-        if (p.chalk) { x.fillStyle = "#f4f1e8"; x.fillRect(-p.s, -2.5, p.s * 2, 5); }
+        if (p.chalk) { x.fillStyle = ["#1f4fbf", "#c8372d", "#2f8a4a"][(p.s | 0) % 3]; x.fillRect(-p.s, -3, p.s * 2, 6); x.fillStyle = "#e8edf2"; x.fillRect(p.s * 0.4, -3, p.s * 0.6, 6); }
         else {
           x.fillStyle = p.col;
           for (var k = 0; k < 5; k++) { x.rotate(1.2566); x.beginPath(); x.ellipse(0, -p.s * 0.55, p.s * 0.32, p.s * 0.55, 0, 0, 6.28); x.fill(); }

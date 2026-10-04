@@ -94,17 +94,19 @@
     </g>
 
     <!-- доска -->
-    <g id="boardObj" class="hot" data-hot="board" tabindex="0" role="button" aria-label="Доска">
+    <g id="boardObj" class="hot" data-hot="board" tabindex="0" role="button" aria-label="Электронная доска">
       <ellipse id="boardGlow" cx="865" cy="110" rx="230" ry="110" fill="url(#glow)" opacity="0"/>
-      <rect x="690" y="40" width="350" height="130" rx="6" fill="#7a5a3a"/>
-      <rect x="700" y="48" width="330" height="112" rx="3" fill="#2e4a3d"/>
-      <g id="boardMini" fill="#e8ece4" font-family="Neucha, cursive" text-anchor="middle" opacity=".0">
+      <rect x="686" y="38" width="358" height="132" rx="8" fill="#1f2329"/>
+      <rect x="698" y="47" width="334" height="110" rx="3" fill="#eef3f8"/>
+      <rect x="698" y="47" width="334" height="110" rx="3" fill="none" stroke="#7fb3e6" stroke-width="2" opacity=".6"/>
+      <g id="boardMini" fill="#1f4fbf" font-family="Neucha, cursive" text-anchor="middle" opacity="0">
         <text x="865" y="82" font-size="18">5 октября · Классная работа</text>
         <text x="865" y="116" font-size="24">Тема: «День учителя»</text>
       </g>
-      <rect x="700" y="160" width="330" height="12" fill="#9b7650"/>
-      <rect x="760" y="161" width="34" height="8" rx="3" fill="#f4f1e8"/>
-      <rect x="930" y="160" width="46" height="10" rx="2" fill="#5f6d74"/>
+      <circle cx="1034" cy="160" r="3" fill="#57d36b"/>
+      <rect x="760" y="161" width="30" height="7" rx="3" fill="#1f4fbf"/>
+      <rect x="796" y="161" width="30" height="7" rx="3" fill="#c8372d"/>
+      <rect x="832" y="161" width="30" height="7" rx="3" fill="#2f8a4a"/>
     </g>
 
     <!-- стол преподавателя (угловой) -->
@@ -116,21 +118,30 @@
       <rect x="845" y="198" width="52" height="12" rx="6" fill="#2f3842"/>
     </g>
     <g id="deskItems">
-      <!-- кружка и ручка -->
-      <circle cx="668" cy="215" r="13" fill="#f4f1e8" stroke="#c8372d" stroke-width="4"/>
-      <circle cx="668" cy="215" r="7" fill="#6b4126"/>
-      <rect x="960" y="296" width="6" height="52" rx="3" fill="#2453c9" transform="rotate(25 963 322)"/>
+      <!-- два монитора, клавиатура и мышка -->
+      <g id="teacherPc">
+        <rect x="795" y="356" width="62" height="9" rx="2" fill="#1d2127"/>
+        <rect x="867" y="356" width="62" height="9" rx="2" fill="#1d2127"/>
+        <rect x="795" y="354" width="62" height="3" fill="#7fb3e6" opacity=".8"/>
+        <rect x="867" y="354" width="62" height="3" fill="#7fb3e6" opacity=".8"/>
+        <rect x="818" y="365" width="16" height="9" rx="2" fill="#3a3f47"/>
+        <rect x="890" y="365" width="16" height="9" rx="2" fill="#3a3f47"/>
+        <rect x="822" y="292" width="80" height="20" rx="3" fill="#2b3038"/>
+        <path d="M826 297H898M826 302H898M826 307H898" stroke="#4a515c" stroke-width="2"/>
+        <ellipse cx="920" cy="302" rx="8" ry="11" fill="#2b3038"/>
+        <line x1="920" y1="293" x2="920" y2="300" stroke="#4a515c" stroke-width="1.5"/>
+      </g>
       <!-- журнал -->
       <g id="journalObj" class="hot" data-hot="journal" tabindex="0" role="button" aria-label="Классный журнал">
-        <rect x="690" y="292" width="96" height="70" rx="4" fill="#3a6b4f" stroke="#244634" stroke-width="3"/>
-        <rect x="690" y="292" width="12" height="70" fill="#244634"/>
-        <text x="748" y="333" text-anchor="middle" font-family="Neucha, cursive" font-size="16" fill="#e9e3c9">ЖУРНАЛ</text>
+        <rect x="660" y="292" width="96" height="70" rx="4" fill="#3a6b4f" stroke="#244634" stroke-width="3"/>
+        <rect x="660" y="292" width="12" height="70" fill="#244634"/>
+        <text x="718" y="333" text-anchor="middle" font-family="Neucha, cursive" font-size="16" fill="#e9e3c9">ЖУРНАЛ</text>
       </g>
-      <!-- указка (появится после квеста) -->
+      <!-- указка (появится после квеста) на приставном столике -->
       <g id="pointerObj" class="hot" data-hot="pointer" tabindex="0" role="button" aria-label="Указка" style="display:none">
-        <ellipse cx="880" cy="327" rx="110" ry="26" fill="url(#glow)"/>
-        <line x1="805" y1="345" x2="975" y2="305" stroke="#c99a5b" stroke-width="9" stroke-linecap="round"/>
-        <line x1="955" y1="310" x2="975" y2="305" stroke="#c8372d" stroke-width="9" stroke-linecap="round"/>
+        <ellipse cx="670" cy="228" rx="40" ry="62" fill="url(#glow)"/>
+        <line x1="655" y1="268" x2="688" y2="190" stroke="#c99a5b" stroke-width="9" stroke-linecap="round"/>
+        <line x1="684" y1="200" x2="688" y2="190" stroke="#c8372d" stroke-width="9" stroke-linecap="round"/>
       </g>
       <!-- куда приземляются самолётики -->
       <g id="landed"></g>
@@ -200,9 +211,9 @@
       <div class="board-ui" id="boardUi"></div>
     </div>
     <div class="tray">
-      <span class="chalk-piece"></span>
+      <span class="markers" aria-hidden="true"><i style="background:#1f4fbf"></i><i style="background:#c8372d"></i><i style="background:#2f8a4a"></i></span>
       <span class="tray-note" id="trayNote"></span>
-      <span class="sponge"></span>
+      <span class="power" aria-hidden="true"></span>
     </div>
   </div>
   <button class="btn btn-ghost board-close" id="boardClose" type="button">Вернуться в класс</button>
