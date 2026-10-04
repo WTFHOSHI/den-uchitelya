@@ -264,7 +264,7 @@
     o.fillStyle = "#fff"; o.textAlign = "center";
     LINES.forEach(function (l) { o.font = font(l.size); o.fillText(l.text, W / 2, l.y); });
     var img = o.getImageData(0, 0, W, H).data;
-    pts = []; grid = {}; covered = 0;
+    pts = []; grid = {}; covered = 0; inkTotal = 0; inkOn = 0;
     for (var y = 0; y < 270; y += 5) {
       for (var x = 0; x < W; x += 5) {
         if (img[(y * W + x) * 4 + 3] > 120) {
@@ -304,19 +304,30 @@
     ctx.strokeStyle = MARKER; ctx.lineWidth = 6;
     ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1); ctx.stroke();
     ctx.restore();
-    // покрытие
+    // покрытие и точность: считаем, сколько маркера легло на буквы, а сколько мимо
     var len = Math.hypot(x1 - x0, y1 - y0), n = Math.max(1, Math.ceil(len / 3));
     for (var s = 0; s <= n; s++) {
       var x = x0 + (x1 - x0) * s / n, y = y0 + (y1 - y0) * s / n;
-      var gx = (x / cell) | 0, gy = (y / cell) | 0;
+      var gx = (x / cell) | 0, gy = (y / cell) | 0, near = false;
       for (var dx = -1; dx <= 1; dx++) for (var dy = -1; dy <= 1; dy++) {
         var arr = grid[(gx + dx) + "," + (gy + dy)]; if (!arr) continue;
         for (var q = 0; q < arr.length; q++) {
-          var p = arr[q];
-          if (!p.c && (p.x - x) * (p.x - x) + (p.y - y) * (p.y - y) < 17 * 17) { p.c = true; covered++; }
+          var p = arr[q], d2 = (p.x - x) * (p.x - x) + (p.y - y) * (p.y - y);
+          if (d2 < 14 * 14) { near = true; if (!p.c) { p.c = true; covered++; } }
         }
       }
+      inkTotal++; if (near) inkOn++;
     }
+  }
+  var inkTotal = 0, inkOn = 0;
+
+  function wipeBoard() {
+    drawing = false; chalkSound(0);
+    pts.forEach(function (p) { p.c = false; });
+    covered = 0; inkTotal = 0; inkOn = 0;
+    drawGuide();
+    updateTraceProgress();
+    toast("Мимо букв! Доска стёрта. Обводите по пунктиру, а не раскрашивайте", 3600);
   }
 
   var drawing = false, last = null, lastT = 0;
@@ -347,12 +358,15 @@
 
   function updateTraceProgress() {
     var pct = pts.length ? covered / pts.length : 0;
+    var acc = inkTotal ? inkOn / inkTotal : 1;
     var bar = document.querySelector("#boardUi .progress > span");
     var lbl = $("traceLabel");
     var shown = Math.min(100, Math.round(pct / 0.7 * 100));
     if (bar) bar.style.width = shown + "%";
-    if (lbl) lbl.textContent = "Обведено " + shown + "%";
-    if (pct >= 0.7) finishTrace();
+    if (lbl) lbl.textContent = "Обведено " + shown + "% · точность " + Math.round(acc * 100) + "%";
+    // слишком много мимо букв: стираем
+    if (inkTotal > 160 && acc < 0.6) { wipeBoard(); return; }
+    if (pct >= 0.7 && acc >= 0.6) finishTrace();
   }
 
   function startTracing() {
@@ -363,7 +377,7 @@
       '<div class="center-msg">' +
       '<p>Обведите маркером число и тему урока, как в прописях</p>' +
       '<div class="progress" style="width:min(420px,70%)"><span></span></div>' +
-      '<p id="traceLabel">Обведено 0%</p></div>';
+      '<p id="traceLabel">Обведено 0% · точность 100%</p></div>';
     var go = function () { buildMask(); drawGuide(); tracingReady = true; };
     if (document.fonts && document.fonts.load) document.fonts.load(font(56)).then(go, go); else go();
   }
