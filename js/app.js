@@ -610,6 +610,8 @@
     var t = $("letterText");
     t.textContent = wish || "Этот самолётик ещё в пути: пожелание скоро появится здесь.";
     t.classList.toggle("empty", !wish);
+    var ps = (window.PS && PS[s.name]) || "";
+    $("letterPs").textContent = ps; $("letterPs").hidden = !ps;
     $("letterClose").textContent = remaining() ? "Сложить и вызвать следующего" : "Сложить";
     var lv = $("letterView"); lv.hidden = false;
     var L = $("letter"); L.style.animation = "none"; void L.offsetWidth; L.style.animation = "";

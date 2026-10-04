@@ -171,6 +171,7 @@ button{font:inherit}
 .letter-from{margin:0;font-size:.78rem;letter-spacing:.07em;text-transform:uppercase;color:#6a7286;font-weight:600}
 .letter-text{font-family:var(--display);font-size:1.6rem;line-height:1.35;color:var(--pen);margin:.4em 0 .6em;white-space:pre-wrap;overflow-wrap:anywhere}
 .letter-text.empty{color:#8b95aa;font-size:1.3rem}
+.letter-ps{font-family:var(--display);font-size:1.15rem;color:#c8372d;margin:-.2em 0 .8em;transform:rotate(-1deg)}
 .letter-sign{margin:0 0 18px;font-family:var(--display);font-size:1.15rem;color:#6a7286;text-align:right}
 
 /* --- финал --- */
