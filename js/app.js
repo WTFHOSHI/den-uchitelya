@@ -611,6 +611,9 @@
     t.textContent = wish || "Этот самолётик ещё в пути: пожелание скоро появится здесь.";
     t.classList.toggle("empty", !wish);
     var ps = (window.PS && PS[s.name]) || "";
+    var signEl = document.getElementById("letterSign") || document.querySelector(".letter-sign");
+    var sg = (window.SIGN && SIGN[s.name]) || "";
+    if (signEl) signEl.textContent = sg ? "— " + sg + ", ИС-25-3С" : "ИС-25-3С";
     var psEl = $("letterPs");
     if (!psEl) { // на случай старой закэшированной страницы
       psEl = document.createElement("p"); psEl.className = "letter-ps"; psEl.id = "letterPs";
